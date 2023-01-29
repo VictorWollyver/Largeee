@@ -15,7 +15,6 @@ const Page = () => {
     try {
       const token = window.localStorage.getItem('token')
       const response = await axios.get('http://localhost:3001/user/cart', { headers: {"Authorization": "Bearer " + token } })
-      console.log(response)
       return response.data
     } catch(err: any) {
       throw new Error(err.response.data)

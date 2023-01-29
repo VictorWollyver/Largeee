@@ -6,16 +6,15 @@ import { useMutation } from 'react-query'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
-type Props = {}
-
-const Create = (props: Props) => {
+const Create = () => {
   const router = useRouter()
   const [ username, setUsername ] = React.useState('')
   const [ password, setPassword ] = React.useState('')
   const [ email, setEmail ] = React.useState('')
 
   const {mutate, isError, error, isLoading} = useMutation<Authentication, Error, UserData>({mutationFn: createUser, onSuccess(data) {
-    window.localStorage.token = data.token
+    window.localStorage.setItem('token', data.token)
+    window.localStorage.setItem('auth', data.auth.toString())
     router.push('/')
   },})
 
@@ -45,22 +44,22 @@ const Create = (props: Props) => {
 
       <form onSubmit={handleSubmit}>
         <div className='mb-4'>
-          <input type="text" minLength={4} value={username} onChange={({currentTarget}) => setUsername(currentTarget.value) } required placeholder='Username' className='rounded-xl p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
+          <input type="text" minLength={4} value={username} onChange={({currentTarget}) => setUsername(currentTarget.value) } required placeholder='Username' className='rounded-lg p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
         </div>
 
         <div className='mb-4'>
-          <input type="password" minLength={8} value={password} onChange={({currentTarget}) => setPassword(currentTarget.value) } required placeholder='Password' className='rounded-xl p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
+          <input type="password" minLength={8} value={password} onChange={({currentTarget}) => setPassword(currentTarget.value) } required placeholder='Password' className='rounded-lg p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
         </div>
 
         <div className='mb-4'>
-          <input type="email" required value={email} onChange={({currentTarget}) => setEmail(currentTarget.value) } placeholder='Email' className='rounded-xl p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
+          <input type="email" required value={email} onChange={({currentTarget}) => setEmail(currentTarget.value) } placeholder='Email' className='rounded-lg p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
         </div>
 
         <div className='mt-8'>
-          { isLoading ? <button disabled className='bg-primary px-6 py-2 rounded-xl text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Loggingin...</button> : <button className='bg-primary px-6 py-2 rounded-xl text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Create</button>}
+          { isLoading ? <button disabled className='bg-primary px-6 py-2 rounded-lg text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Loggingin...</button> : <button className='bg-primary px-6 py-2 rounded-lg text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Create</button>}
           <Link href={'/user/login'} className='text-primary'>Already have account?</Link>
         </div>
-          {isError ? <p className='mt-2'>{error.message}</p> : <p></p>}
+          {isError ? <p className='mt-2 font-semibold'>{error.message}</p> : <p></p>}
       </form>
     </section>
   )

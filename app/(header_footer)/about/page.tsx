@@ -10,23 +10,23 @@ interface Accordion {
 const questionsData: Accordion[] = [
   {
     title: 'Our purpose',
-    answer: 'Nosso proposito é comercializar roupas unissex focadas no estilo streetwear'
+    answer: 'Our purpose is to market unisex clothing focused on streetwear style'
   },
   {
     title: 'Payments',
-    answer: 'Nossos pagamentos podem ser feitos no cartão ou dinheiro'
+    answer: 'Our payments can be made by card or cash'
   },
   {
     title: 'Our products',
-    answer: 'Nosso proposito é comercializar roupas unissex focadas no estilo streetwear'
+    answer: 'Our products are top quality t-shirts with two types of fabrics'
   },
   {
     title: 'Jobs',
-    answer: 'Nosso proposito é comercializar roupas unissex focadas no estilo streetwear'
+    answer: 'We are an inclusive company and we have several vacancies in our company'
   },
   {
     title: 'Delivery',
-    answer: 'Nosso proposito é comercializar roupas unissex focadas no estilo streetwear'
+    answer: 'We deliver worldwide, free of charge'
   },
 ]
 

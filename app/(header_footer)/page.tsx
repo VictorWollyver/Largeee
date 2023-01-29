@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import FeaturedProducts from "../../src/components/featuredProducts";
 import Products from "../../src/components/products";
 

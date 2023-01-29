@@ -13,6 +13,7 @@ const Login = () => {
   const {error, isError, isLoading, mutate} = useMutation<Authentication, Error, UserDataLogin>({mutationFn: loginUser, 
   onSuccess(data) {
     window.localStorage.setItem('token', data.token)
+    window.localStorage.setItem('auth', data.auth.toString())
     router.push('/')
   },})
 
@@ -22,11 +23,9 @@ const Login = () => {
         email: userData.email,
         password: userData.password
       })
-      console.log(response)
       return response.data
 
     } catch(err: any) {
-      console.log(err)
       throw new Error(err.response.data.message)
     }
   }
@@ -44,15 +43,15 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
 
         <div className='mb-4'>
-          <input type="email" required value={email} onChange={({currentTarget}) => setEmail(currentTarget.value) } placeholder='Email' className='rounded-xl p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
+          <input type="email" required value={email} onChange={({currentTarget}) => setEmail(currentTarget.value) } placeholder='Email' className='rounded-lg p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
         </div>
 
         <div className='mb-4'>
-          <input type="password" minLength={8} value={password} onChange={({currentTarget}) => setPassword(currentTarget.value) } required placeholder='Password' className='rounded-xl p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
+          <input type="password" minLength={8} value={password} onChange={({currentTarget}) => setPassword(currentTarget.value) } required placeholder='Password' className='rounded-lg p-3 bg-transparent border-2 placeholder:text-contrastLow w-[100%]'/>
         </div>
 
         <div className='mt-8'>
-          { isLoading ? <button disabled className='bg-primary px-6 py-2 rounded-xl text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Loggingin...</button> : <button className='bg-primary px-6 py-2 rounded-xl text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Login</button>}
+          { isLoading ? <button disabled className='bg-primary px-6 py-2 rounded-lg text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Loggingin...</button> : <button className='bg-primary px-6 py-2 rounded-lg text-sobreTom font-extrabold text-2xl mr-8 hover:brightness-95'>Login</button>}
           <Link href={'/user/create'} className='text-primary'>Dont have account?</Link>
         </div>
           {isError ? <p className='mt-2 font-semibold'>{error.message}</p> : <p></p>}

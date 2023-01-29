@@ -1,15 +1,18 @@
 'use client'
 
-import React, { use } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import cart from '../../assets/cart.svg'
 import { useMutation } from 'react-query'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const ButtonAddCart = ({ id }: { id: string }) => {
+  const router = useRouter()
+  const auth = window.localStorage.getItem('auth')
   const {mutate} = useMutation<{message: string}, Error>({mutationFn:addProductToCart , 
   onSuccess() {
-    alert('Adicionado com sucesso')
+    router.push('/user/cart')
   }, onError(error) {
     alert(error)
   },})
@@ -24,11 +27,21 @@ const ButtonAddCart = ({ id }: { id: string }) => {
     }
   }
 
-  return (
-    <button onClick={() => mutate()} className="text-sobreTom button-product hover:brightness-90">
-      <Image src={cart} alt="cart" />
-    </button>
-  )
+  
+
+  if(auth){
+    return (
+      <button onClick={() => mutate()} className="text-sobreTom button-product hover:brightness-90 min-w-max h-[80px] self-end">
+        <Image src={cart} alt="cart" width={30} height={30}   />
+      </button>
+    )
+  }
+
+  if(!auth) {
+    return (
+      <></>
+    )
+  }
 }
 
 export default ButtonAddCart

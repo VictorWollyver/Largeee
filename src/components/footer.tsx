@@ -10,6 +10,7 @@ const Footer = () => {
   const router = useRouter()
   function handleLogOut() {
     window.localStorage.removeItem('token')
+    window.localStorage.removeItem('auth')
     router.push('/user/login')
   }
 

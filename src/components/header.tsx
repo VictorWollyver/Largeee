@@ -9,14 +9,16 @@ import Link from 'next/link'
 import axios from 'axios'
 
 const Header = () => {
-  const { data, isSuccess} = useQuery('getUser', getUser)
+  const { data, isSuccess } = useQuery('getUser', getUser)
+  const token = window.localStorage.getItem('token')
 
   async function getUser() {
-    const token = window.localStorage.getItem('token')
+    if(token) {
       const response = await axios.get('http://localhost:3001/user', {headers: {Authorization: 'Bearer ' + token}})
       if(!response.status) throw new Error('')
       return response.data
     }
+  }
 
   return (
     <header className='flex items-center justify-between'>
@@ -25,7 +27,7 @@ const Header = () => {
       </Link>
       <button className='flex items-center '>
         <Image className='mr-3' alt='account' src={account} width='16' height='16' />
-        { isSuccess ? <Link href={`/user/cart`}>{data.username}</Link> : <Link href="/user/create">Account</Link> }
+        { token && isSuccess ? <Link href={`/user/cart`}>{data.username}</Link> : <Link href="/user/create">Account</Link> }
       </button>
     </header>
   )

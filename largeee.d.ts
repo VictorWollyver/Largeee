@@ -28,6 +28,7 @@ interface UserDataLogin {
 
 interface ProductCart {
   _id: string;
+  product_id: string
   name: string;
   price: number;
   src: string;

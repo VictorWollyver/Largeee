@@ -4,19 +4,24 @@ import Comments from "../../../../src/components/comments";
 import ButtonAddCart from "../../../../src/components/buttonAddCart";
 import ButtonBuyProduct from "../../../../src/components/buttonBuyProduct";
 import axios from "axios";
+import FormSizeProduct from "../../../../src/components/formSizeProduct";
 
 const Product = async ({ params }: { params: { id: string } }) => {
-  async function getProductByID(id: string): Promise<Product> {
-    const response = await axios.get(`http://localhost:3001/products/${id}`);
-
-    return response.data;
-  }
-
   const { color, illustration, name, price, src, tissue, _id } = await getProductByID(params.id);
 
+  async function getProductByID(id: string): Promise<Product> {
+    try {
+      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      return response.data;
+      
+    } catch (error: any) {
+      throw new Error(error.response.data)
+    }
+
+  }
 
   return (
-    <div className="grid grid-cols-2 gap-8 grid-rows-[500px] product-id mt-20 text-2xl">
+    <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 sm:grid-rows-[500px] grid-rows-[200px] product-id mt-20 text-2xl">
       <Image
         className="rounded-md image-cart"
         src={"/" + src}
@@ -35,22 +40,9 @@ const Product = async ({ params }: { params: { id: string } }) => {
           <li>Illustration: {illustration ? 'yes' : 'no'}</li>
           <li>Tissue: {tissue}</li>
         </ul>
-        <div>
-          <h3 className="mb-2">Size:</h3>
-          <button className="border-2 border-black rounded-xl w-11 h-11 mr-6 hover:text-primary">
-            M
-          </button>
-          <button className="border-2 border-black rounded-xl w-11 h-11 mr-6 hover:text-primary">
-            G
-          </button>
-          <button className="border-2 border-black rounded-xl w-11 h-11 mr-6 hover:text-primary">
-            GG
-          </button>
-          <button className="border-2 border-black rounded-xl w-11 h-11 mr-6 hover:text-primary">
-            LG
-          </button>
-        </div>
-        <div className="flex gap-5">
+        <FormSizeProduct />
+        <div className="flex gap-5 sm:mt-0 mt-8">
+          {/* @ts-expect-error Server Component */}
           <ButtonAddCart id={params.id}/>
           <ButtonBuyProduct listProducts={[{name, price, amount: 1}]}/>
         </div>

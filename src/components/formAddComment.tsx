@@ -20,7 +20,6 @@ const FormAddComment = ({ id, refetch }: Props) => {
 
   async function postComment(comment: string) {
     try {
-      
       const token = window.localStorage.token
       const response = await axios.post(`http://localhost:3001/products/${id}/comments`, {comment}, {headers: {Authorization: 'Bearer ' + token}})
       return response.data

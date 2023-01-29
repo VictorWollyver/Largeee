@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 
 const RootLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <Head />
       <body>
         <QueryClientProvider client={queryClient}>

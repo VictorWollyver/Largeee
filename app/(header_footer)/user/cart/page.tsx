@@ -5,18 +5,22 @@ import CartItem from '../../../../src/components/cartItem'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import ButtonBuyProduct from '../../../../src/components/buttonBuyProduct'
+import Link from 'next/link'
 
-async function getCart() {
-  try {
-    const response = await axios.get('http://localhost:3001/user/cart', { headers: {"Authorization": "Bearer " + window.localStorage.token } })
-    return response.data
-  } catch(err: any) {
-    throw new Error(err.response.data)
-  }
-}
+
 
 const Page = () => {
-  const { data, isSuccess, isError, error } = useQuery<ProductCart[], Error>('getCart', getCart)
+  const { data, isSuccess, isError, error, refetch } = useQuery<ProductCart[], Error>('getCart', getCart)
+  async function getCart() {
+    try {
+      const token = window.localStorage.getItem('token')
+      const response = await axios.get('http://localhost:3001/user/cart', { headers: {"Authorization": "Bearer " + token } })
+      console.log(response)
+      return response.data
+    } catch(err: any) {
+      throw new Error(err.response.data)
+    }
+}
 
   const itemsAmount = data?.reduce((prev, {amount}) => {
     return prev + amount
@@ -38,7 +42,9 @@ const Page = () => {
   if(isSuccess && !data?.length) {
     return (
       <section className='mt-20'>
-        <p className='text-2xl'>Não possui itens no carrinho</p>
+        <p className='text-2xl'>There are no items in the cart</p>
+        <p className='mt-24 text-2xl'>Come see our products to assemble your Largeee cart</p>
+        <Link href={'/'} className='rounded-lg text-sobreTom bg-primary p-3 font-bold inline-block'>Go to Products</Link>
       </section>
     )
   }
@@ -46,7 +52,7 @@ const Page = () => {
   if(isSuccess)
   return (
     <section className='mt-20'>
-      {data?.map(({src, name, price, amount}, index) => <CartItem key={index} src={src} name={name} price={price} amount={amount}/>)}
+      {data?.map(({src, name, price, amount, product_id}, index) => <CartItem key={index} src={src} name={name} price={price} amount={amount} id={product_id} refetch={refetch} />)}
       <div className=''>
         <ButtonBuyProduct listProducts={data}/>
         <p className='text-2xl mt-4'>Total ({itemsAmount}): <span className='text-primary '>R$ {totalValue}</span></p>

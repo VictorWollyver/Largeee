@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+import api from '../../../../src/api/axiosConfig'
 
 const Create = () => {
   const router = useRouter()
@@ -20,13 +20,13 @@ const Create = () => {
 
   async function createUser(userData: UserData){
     try {
-      const response = await axios.post('http://localhost:3001/user/create', {
+      const response = await api.post('/user/create', {
         username: userData.username,
         email: userData.email,
         password: userData.password
       })
+      console.log(response)
       return response.data
-
     } catch(err: any) {
       throw new Error(err.response.data)
     }

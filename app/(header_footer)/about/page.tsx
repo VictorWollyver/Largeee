@@ -30,7 +30,7 @@ const questionsData: Accordion[] = [
   },
 ]
 
-const About = () => {
+const About = (props: any) => {
   const [click, setClick] = React.useState<null | number>()
 
   function toggle(index: number) {

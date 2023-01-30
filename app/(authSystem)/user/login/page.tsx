@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useMutation } from 'react-query'
-import axios from 'axios'
+import api from '../../../../src/api/axiosConfig'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -19,7 +19,7 @@ const Login = () => {
 
   async function loginUser(userData: UserDataLogin) {
     try{
-      const response = await axios.post('http://localhost:3001/user/login', {
+      const response = await api.post('/user/login', {
         email: userData.email,
         password: userData.password
       })

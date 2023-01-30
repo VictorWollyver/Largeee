@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import cart from '../../assets/cart.svg'
 import { useMutation } from 'react-query'
-import axios from 'axios'
+import api from '../api/axiosConfig'
 import { useRouter } from 'next/navigation'
 
 const ButtonAddCart = ({ id }: { id: string }) => {
@@ -20,7 +20,7 @@ const ButtonAddCart = ({ id }: { id: string }) => {
   async function addProductToCart() {
     try {
       const token = window.localStorage.getItem('token')
-      const response = await axios.post(`http://localhost:3001/user/addProductCart/${id}`, null, {headers: {Authorization: 'Bearer ' + token}})
+      const response = await api.post(`/user/addProductCart/${id}`, null, {headers: {Authorization: 'Bearer ' + token}})
       return response.data
     } catch(err: any) {
       throw new Error(err.response.data.message)

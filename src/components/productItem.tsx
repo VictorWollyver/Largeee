@@ -1,13 +1,14 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import axios from 'axios'
+import api from '../api/axiosConfig'
+
 
 const ProductItem = async ({ url }: { url: string })  => {
 
   async function getProducts(url: string): Promise<Product[]> {
     try {
-      const response = await axios.get(url)
+      const response = await api.get(url)
       return response.data
       
     } catch (error:any) {

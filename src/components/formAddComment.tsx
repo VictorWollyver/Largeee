@@ -2,7 +2,8 @@
 
 import React, { FormEvent } from 'react'
 import { useMutation } from 'react-query'
-import axios from 'axios'
+import api from '../api/axiosConfig'
+
 
 type Props = {
   id: string
@@ -21,7 +22,7 @@ const FormAddComment = ({ id, refetch }: Props) => {
   async function postComment(comment: string) {
     try {
       const token = window.localStorage.token
-      const response = await axios.post(`http://localhost:3001/products/${id}/comments`, {comment}, {headers: {Authorization: 'Bearer ' + token}})
+      const response = await api.post(`/products/${id}/comments`, {comment}, {headers: {Authorization: 'Bearer ' + token}})
       return response.data
     } catch (err: any) {
       throw new Error(err.response.data.message)

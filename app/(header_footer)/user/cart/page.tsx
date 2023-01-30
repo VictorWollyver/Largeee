@@ -3,7 +3,7 @@
 import React from 'react'
 import CartItem from '../../../../src/components/cartItem'
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import api from '../../../../src/api/axiosConfig'
 import ButtonBuyProduct from '../../../../src/components/buttonBuyProduct'
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ const Page = () => {
   async function getCart() {
     try {
       const token = window.localStorage.getItem('token')
-      const response = await axios.get('http://localhost:3001/user/cart', { headers: {"Authorization": "Bearer " + token } })
+      const response = await api.get('/user/cart', { headers: {"Authorization": "Bearer " + token } })
       return response.data
     } catch(err: any) {
       throw new Error(err.response.data)

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import axios from 'axios'
+import api from '../api/axiosConfig'
 import { useMutation } from 'react-query'
 
 interface ProductToBuy {
@@ -21,7 +21,7 @@ const ButtonBuyProduct = ({ listProducts } : props) => {
   },})
   async function buyProduct() {
     try {
-      const response = await axios.post('http://localhost:3001/payments/create-checkout-session', {listProducts})
+      const response = await api.post('/payments/create-checkout-session', {listProducts})
       return response.data
     } catch (error: any) {
       throw new Error(error.response.data)

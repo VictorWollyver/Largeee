@@ -3,7 +3,7 @@ import Image from "next/image";
 import Comments from "../../../../src/components/comments";
 import ButtonAddCart from "../../../../src/components/buttonAddCart";
 import ButtonBuyProduct from "../../../../src/components/buttonBuyProduct";
-import axios from "axios";
+import api from "../../../../src/api/axiosConfig";
 import FormSizeProduct from "../../../../src/components/formSizeProduct";
 
 const Product = async ({ params }: { params: { id: string } }) => {
@@ -11,7 +11,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 
   async function getProductByID(id: string): Promise<Product> {
     try {
-      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      const response = await api.get(`/products/${id}`);
       return response.data;
       
     } catch (error: any) {

@@ -4,10 +4,12 @@ import React from 'react'
 import Image from 'next/image'
 import logo from '../../assets/LArgeee-Logo 1.svg'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 const Footer = () => {
   const router = useRouter()
+  const pathName = usePathname()
+  const footerBottom = pathName == '/about' || pathName == '/jobs' || pathName == '/contact' ? 'bottom-0 absolute' : ''
   function handleLogOut() {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('auth')
@@ -15,7 +17,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className='grid h-60 gap-5 text-contrastLow footer-grid mt-20' >
+    <footer className={ `grid h-60 gap-5 text-contrastLow footer-grid mt-20 ` + footerBottom } >
       <div className='justify-self-center'>
         <div>
           <Image alt='logo' src={logo} width={200} height={200} priority />

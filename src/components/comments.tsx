@@ -4,7 +4,7 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import CommentItem from './commentItem'
 import FormAddComment from './formAddComment'
-import axios from 'axios'
+import api from '../api/axiosConfig'
 
 type Props = { id: string}
 
@@ -14,7 +14,7 @@ const Comments = ({ id }: Props) => {
   const {data: comments, isLoading, error, isError, refetch} = useQuery<CommentProduct[], Error>('comments', getCommentsByID)
 
   async function getCommentsByID(): Promise<CommentProduct[]> {
-    const response = await axios.get(`http://localhost:3001/products/${id}/comments`)
+    const response = await api.get(`/products/${id}/comments`)
 
     return response.data
   }

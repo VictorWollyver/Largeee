@@ -3,7 +3,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation, useQueryClient } from 'react-query'
-import axios from 'axios'
+import api from '../api/axiosConfig'
+
 
 type Props = {
   src: string;
@@ -24,7 +25,7 @@ const CartItem = ({src, name, price, amount, id, refetch}: Props) => {
   async function removeAmount() {
     try {
       const token = window.localStorage.getItem('token')
-      const response = await axios.delete('http://localhost:3001/user/removeProductCart/' + id, {headers: {Authorization: 'Bearer ' + token}})
+      const response = await api.delete('/user/removeProductCart/' + id, {headers: {Authorization: 'Bearer ' + token}})
       return response.data
     } catch (error: any) {
       throw new Error(error.response.data)
